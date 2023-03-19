@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="题目给定一个单词数组和一个长度 maxWidth，重新排版单词，使其成为每行恰好有 maxWidth 个字符，且左右两端对齐的文本。
+你应该使用“贪心算法”来放置给定的单词；也就是说，尽可能多地往每行中放置单词。必要时可用空格 ‘ ‘ 填充，使得每行恰好有 maxWidth 个字符。
+要求尽可能均匀">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="John Doe">
+    
+
+    <!-- Title -->
+    
+    <title>leetcode-68文本左右对齐 | Hexo</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//cdn.jsdelivr.net/npm/bootstrap@3.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//cdn.jsdelivr.net/npm/font-awesome@4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Noto+Serif:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- jQuery -->
+    <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="//cdn.jsdelivr.net/npm/bootstrap@3.3.6/dist/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+
+    <!-- Content -->
+    <section class="article-container">
+    <!-- Back Home -->
+    <a class="nav-back" href="/">
+    <i class="fa fa-puzzle-piece"></i>
+</a>
+
+        <!-- Page Header -->
+        <header class="intro-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="post-heading">
+                            <h1>
+                                leetcode-68文本左右对齐
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Post Content -->
+        <article>
+            <div class="container">
+                <div class="row">
+                    <!-- Post Main Content -->
+                    <div class="post-content col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个单词数组和一个长度 maxWidth，重新排版单词，使其成为每行恰好有 maxWidth 个字符，且左右两端对齐的文本。</p>
+<p>你应该使用“贪心算法”来放置给定的单词；也就是说，尽可能多地往每行中放置单词。必要时可用空格 ‘ ‘ 填充，使得每行恰好有 maxWidth 个字符。</p>
+<p>要求尽可能均匀分配单词间的空格数量。如果某一行单词间的空格不能均匀分配，则左侧放置的空格数要多于右侧的空格数。</p>
+<p>文本的最后一行应为左对齐，且单词之间不插入额外的空格。</p>
+<p>说明:</p>
+<p>单词是指由非空格字符组成的字符序列。<br>每个单词的长度大于 0，小于等于 maxWidth。<br>输入单词数组 words 至少包含一个单词。<br>示例:</p>
+<p>输入:<br>words &#x3D; [“This”, “is”, “an”, “example”, “of”, “text”, “justification.”]<br>maxWidth &#x3D; 16<br>输出:<br>[<br>   “This    is    an”,<br>   “example  of text”,<br>   “justification.  “<br>]<br>示例 2:</p>
+<p>输入:<br>words &#x3D; [“What”,”must”,”be”,”acknowledgment”,”shall”,”be”]<br>maxWidth &#x3D; 16<br>输出:<br>[<br>  “What   must   be”,<br>  “acknowledgment  “,<br>  “shall be        “<br>]<br>解释: 注意最后一行的格式应为 “shall be    “ 而不是 “shall     be”,<br>     因为最后一行应为左对齐，而不是左右两端对齐。<br>     第二行同样为左对齐，这是因为这行只包含一个单词。<br>示例 3:</p>
+<p>输入:<br>words &#x3D; [“Science”,”is”,”what”,”we”,”understand”,”well”,”enough”,”to”,”explain”,<br>         “to”,”a”,”computer.”,”Art”,”is”,”everything”,”else”,”we”,”do”]<br>maxWidth &#x3D; 20<br>输出:<br>[<br>  “Science  is  what we”,<br>  “understand      well”,<br>  “enough to explain to”,<br>  “a  computer.  Art is”,<br>  “everything  else  we”,<br>  “do                  “<br>]</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fullJustify</span>(<span class="params">self, words: <span class="type">List</span>[<span class="built_in">str</span>], maxWidth: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        res=[]</span><br><span class="line">        res_t=<span class="string">&quot;&quot;</span></span><br><span class="line">        res_line=[]</span><br><span class="line">        <span class="keyword">for</span> index,word <span class="keyword">in</span> <span class="built_in">enumerate</span>(words):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">len</span>(res_t):</span><br><span class="line">                res_t+=word</span><br><span class="line">                res_line.append(word)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(res_t)+<span class="number">1</span>+<span class="built_in">len</span>(word)&lt;=maxWidth:</span><br><span class="line">                res_t+=<span class="string">&quot; &quot;</span>+word</span><br><span class="line">                res_line.append(word)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            left_blank = maxWidth-<span class="built_in">len</span>(res_t)</span><br><span class="line">            count = <span class="built_in">len</span>(res_line)-<span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> count:</span><br><span class="line">                res_t=res_line[<span class="number">0</span>]+<span class="string">&#x27; &#x27;</span>*(maxWidth-<span class="built_in">len</span>(res_line[<span class="number">0</span>]))</span><br><span class="line">                res.append(res_t)</span><br><span class="line">                res_t = word</span><br><span class="line">                res_line.clear()</span><br><span class="line">                res_line.append(word)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            per_blank = left_blank//count</span><br><span class="line">            ys = left_blank%count</span><br><span class="line">            res_t=<span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(res_line)-<span class="number">1</span>):</span><br><span class="line">                <span class="keyword">if</span> ys:</span><br><span class="line">                    res_t+=res_line[i]+<span class="string">&#x27; &#x27;</span>*(<span class="number">1</span>+<span class="number">1</span>+per_blank)</span><br><span class="line">                    ys-=<span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    res_t+=res_line[i]+<span class="string">&#x27; &#x27;</span>*(<span class="number">1</span>+per_blank)</span><br><span class="line">            res_t+=res_line[-<span class="number">1</span>]</span><br><span class="line">            res.append(res_t)</span><br><span class="line">            res_t = word</span><br><span class="line">            res_line.clear()</span><br><span class="line">            res_line.append(word)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(res_line)==<span class="number">1</span>:</span><br><span class="line">            res_t=res_line[<span class="number">0</span>]+<span class="string">&#x27; &#x27;</span>*(maxWidth-<span class="built_in">len</span>(res_line[<span class="number">0</span>]))</span><br><span class="line">            res.append(res_t)</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">len</span>(res_line)&gt;<span class="number">1</span>:</span><br><span class="line">            <span class="comment"># left_blank = maxWidth-len(res_t)</span></span><br><span class="line">            <span class="comment"># count = len(res_line)-1</span></span><br><span class="line">            <span class="comment"># per_blank = left_blank//count</span></span><br><span class="line">            <span class="comment"># ys = left_blank%count</span></span><br><span class="line">            <span class="comment"># res_t=&quot;&quot;</span></span><br><span class="line">            <span class="comment"># for i in range(len(res_line)-1):</span></span><br><span class="line">            <span class="comment">#     if ys:</span></span><br><span class="line">            <span class="comment">#         res_t+=res_line[i]+&#x27; &#x27;*(1+ys+per_blank)</span></span><br><span class="line">            <span class="comment">#         ys-=1</span></span><br><span class="line">            <span class="comment">#     else:</span></span><br><span class="line">            <span class="comment">#         res_t+=res_line[i]+&#x27; &#x27;*(1+per_blank)</span></span><br><span class="line">            res_t+=<span class="string">&#x27; &#x27;</span>*(maxWidth-<span class="built_in">len</span>(res_t))</span><br><span class="line">            res.append(res_t)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+                            <!-- Meta -->
+                            <div class="post-meta">
+                                <hr>
+                                <br>
+                                <div class="post-tags">
+                                    
+                                        
+
+<a href="/tags/数据结构与算法/">#数据结构与算法</a>
+
+
+                                            
+                                </div>
+                                <div class="post-date">
+                                    
+                                        2022-01-19
+                                    
+                                </div>
+                            </div>
+                    </div>
+
+                    <!-- Comments -->
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <!-- Disqus Comments -->
+
+
+                    </div>
+                </div>
+            </div>
+        </article>
+</section>
+
+<!-- Image viewer-->
+
+    <!-- Custom picture view-->
+    <link href="/css/viewer.min.css" rel="stylesheet" />
+    <script
+      src="/js/viewer.min.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    
+    <script type="text/javascript">
+      // set image viewer
+      Viewer.setDefaults({
+        zoomRatio: [0.5],
+        navbar: false,
+        toolbar: false,
+        button: false,
+        title: [2, (image, imageData) => `${image.alt}`],
+        show: function() {
+          this.viewer.zoomTo(0.5);
+        }
+      });
+      var imageList = document.getElementsByTagName("img");
+      Array.prototype.forEach.call(imageList, element => {
+        var viewer = new Viewer(element);
+      });
+    </script>
+
+    
+
+<!-- TOC -->
+
+    <aside id="article-toc" role="navigation" class="fixed">
+        <div id="article-toc-inner">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码</span></a></li></ol>
+        </div>
+    </aside>
+
+    <!-- Scripts -->
+    <script type="text/javascript">
+    console.log("© zchen9 🙋 2015-" + new Date().getFullYear());
+</script>
+  
+    <!-- Google Analytics -->
+    
+
+    <!-- Service Worker -->
+    <!-- if using service worker -->
+
+    
+</body>
+
+</html>
